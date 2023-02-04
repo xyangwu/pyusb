@@ -347,15 +347,15 @@ calls below will work equally:
 
 .. code-block:: python
 
-    >>> dev.set_configuration(5)
+    dev.set_configuration(5)
     # or
-    >>> dev.set_configuration() # we assume the configuration 5 is the first one
+    dev.set_configuration() # we assume the configuration 5 is the first one
     # or
-    >>> cfg = util.find_descriptor(dev, bConfigurationValue=5)
-    >>> cfg.set()
+    cfg = util.find_descriptor(dev, bConfigurationValue=5)
+    cfg.set()
     # or
-    >>> cfg = util.find_descriptor(dev, bConfigurationValue=5)
-    >>> dev.set_configuration(cfg)
+    cfg = util.find_descriptor(dev, bConfigurationValue=5)
+    dev.set_configuration(cfg)
 
 Wow! You can use a ``Configuration`` object as a parameter to
 ``set_configuration``!  Yes, and also it has a ``set`` method to configure
@@ -388,7 +388,7 @@ function:
 
 .. code-block:: python
 
-    >>> dev.set_interface_altsetting(interface = 0, alternate_setting = 0)
+    dev.set_interface_altsetting(interface = 0, alternate_setting = 0)
 
 .. warning::
     The USB spec says that a device is allowed to return an error in case it
@@ -411,9 +411,9 @@ from ``bInterfaceNumber`` and ``bAlternateSetting`` fields. Example:
 
 .. code-block:: python
 
-    >>> intf = find_descriptor(...)
-    >>> dev.set_interface_altsetting(intf)
-    >>> intf.set_altsetting() # wow! Interface also has a method for it
+    intf = find_descriptor(...)
+    dev.set_interface_altsetting(intf)
+    intf.set_altsetting() # wow! Interface also has a method for it
 
 .. warning::
     The ``Interface`` object must belong to the active configuration descriptor.
@@ -440,11 +440,11 @@ structure. Following is a example of how to do a control transfer [#]_:
 
 .. code-block:: python
 
-    >>> msg = 'test'
-    >>> assert dev.ctrl_transfer(0x40, CTRL_LOOPBACK_WRITE, 0, 0, msg) == len(msg)
-    >>> ret = dev.ctrl_transfer(0xC0, CTRL_LOOPBACK_READ, 0, 0, len(msg))
-    >>> sret = ''.join([chr(x) for x in ret])
-    >>> assert sret == msg
+    msg = 'test'
+    assert dev.ctrl_transfer(0x40, CTRL_LOOPBACK_WRITE, 0, 0, msg) == len(msg)
+    ret = dev.ctrl_transfer(0xC0, CTRL_LOOPBACK_READ, 0, 0, len(msg))
+    sret = ''.join([chr(x) for x in ret])
+    assert sret == msg
 
 In this example, it is assumed that our device implements two custom control
 requests that act as a loopback pipe. What you write with the
@@ -466,7 +466,7 @@ read.
 For the other transfers, you use the methods ``write`` and ``read``,
 respectively, to write and read data. You don't need to worry about the
 transfer type, it is automatically determined from the endpoint address. Here
-is our loopback example assuming the we have a loopback pipe in the endpoint
+is our loopback example assuming that we have a loopback pipe in the endpoint
 1:
 
 .. code-block:: python
